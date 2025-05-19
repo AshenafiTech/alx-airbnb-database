@@ -180,3 +180,72 @@ This file (`subqueries.sql`) demonstrates the use of both non-correlated and cor
 - Adjust table or column names if your schema differs.
 
 ---
+
+# Aggregations and Window Functions SQL Queries
+
+This file (`aggregations_and_window_functions.sql`) demonstrates the use of SQL aggregation and window functions on the Airbnb database schema.
+
+## Contents
+
+- **Aggregation with GROUP BY:**  
+  Calculates the total number of bookings made by each user.
+
+- **Window Function (RANK):**  
+  Ranks properties based on the total number of bookings they have received.
+
+## Usage
+
+1. Ensure your database is set up and populated with the schema and seed data.
+2. Run the queries in this file using your preferred MySQL client or command line:
+   ```
+   mysql -u <username> -p <database_name> < aggregations_and_window_functions.sql
+   ```
+
+## Query Descriptions
+
+- **Total number of bookings made by each user:**
+  ```sql
+  SELECT
+      Users.user_id,
+      Users.first_name,
+      Users.last_name,
+      COUNT(Bookings.booking_id) AS total_bookings
+  FROM
+      Users
+  LEFT JOIN
+      Bookings ON Users.user_id = Bookings.user_id
+  GROUP BY
+      Users.user_id,
+      Users.first_name,
+      Users.last_name;
+  ```
+
+- **Rank properties based on the total number of bookings:**
+  ```sql
+  SELECT
+      property_id,
+      name,
+      total_bookings,
+      RANK() OVER (ORDER BY total_bookings DESC) AS property_rank
+  FROM (
+      SELECT
+          Properties.property_id,
+          Properties.name,
+          COUNT(Bookings.booking_id) AS total_bookings
+      FROM
+          Properties
+      LEFT JOIN
+          Bookings ON Properties.property_id = Bookings.property_id
+      GROUP BY
+          Properties.property_id,
+          Properties.name
+  ) AS property_booking_counts;
+  ```
+
+## Notes
+
+- These queries assume the database schema and data are already loaded.
+- Adjust table or column names if your schema differs.
+- Window functions require MySQL 8.0+ or compatible database.
+
+---
