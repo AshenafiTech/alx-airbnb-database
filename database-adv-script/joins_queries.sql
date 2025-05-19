@@ -30,7 +30,9 @@ SELECT
 FROM
     Properties
 LEFT JOIN
-    Reviews ON Properties.property_id = Reviews.property_id;
+    Reviews ON Properties.property_id = Reviews.property_id
+ORDER BY
+    Properties.property_id;
 
 -- a query using a FULL OUTER JOIN to retrieve all users and all bookings, even if the user has no booking or a booking is not linked to a user.
 
