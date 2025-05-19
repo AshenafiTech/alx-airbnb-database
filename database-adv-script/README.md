@@ -222,11 +222,12 @@ This file (`aggregations_and_window_functions.sql`) demonstrates the use of SQL 
 
 - **Rank properties based on the total number of bookings:**
   ```sql
-    SELECT
+      SELECT
       property_id,
       name,
       total_bookings,
-      ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS property_row_number
+      ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS property_row_number,
+      RANK() OVER (ORDER BY total_bookings DESC) AS property_rank
   FROM (
       SELECT
           Properties.property_id,
