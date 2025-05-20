@@ -56,6 +56,7 @@ CREATE TABLE Payments (
     payment_id CHAR(36) PRIMARY KEY,
     booking_id CHAR(36) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
+    status ENUM('pending', 'completed', 'failed') NOT NULL,
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     payment_method ENUM('credit_card', 'paypal', 'stripe') NOT NULL,
     FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
@@ -100,5 +101,3 @@ CREATE TABLE Messages (
 -- Indexes for sender_id and recipient_id
 CREATE INDEX idx_messages_sender_id ON Messages(sender_id);
 CREATE INDEX idx_messages_recipient_id ON Messages(recipient_id);
-
-
