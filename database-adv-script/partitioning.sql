@@ -1,6 +1,15 @@
 -- Partition the Bookings table by RANGE on the start_date column
+-- Create the Bookings table partitioned by year of start_date
 
-ALTER TABLE Bookings
+CREATE TABLE Bookings (
+    booking_id CHAR(36) PRIMARY KEY,
+    property_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL
+    -- Add other columns as needed, but do NOT add foreign keys if you want partitioning
+)
 PARTITION BY RANGE (YEAR(start_date)) (
     PARTITION p2022 VALUES LESS THAN (2023),
     PARTITION p2023 VALUES LESS THAN (2024),
