@@ -250,3 +250,33 @@ This file (`aggregations_and_window_functions.sql`) demonstrates the use of SQL 
 - Window functions require MySQL 8.0+ or compatible database.
 
 ---
+
+# Index Performance Analysis
+
+## 1. High-Usage Columns
+
+Based on typical queries (WHERE, JOIN, ORDER BY) and your schema, the following columns are frequently used:
+
+- **Users:** `email`, `user_id`
+- **Bookings:** `user_id`, `property_id`, `status`
+- **Properties:** `host_id`, `property_id`, `location`
+
+## 2. Index Creation
+
+The following indexes were created in `database_index.sql`:
+
+```sql
+-- Users table
+CREATE INDEX idx_users_email ON Users(email);
+CREATE INDEX idx_users_user_id ON Users(user_id);
+
+-- Bookings table
+CREATE INDEX idx_bookings_user_id ON Bookings(user_id);
+CREATE INDEX idx_bookings_property_id ON Bookings(property_id);
+CREATE INDEX idx_bookings_status ON Bookings(status);
+
+-- Properties table
+CREATE INDEX idx_properties_host_id ON Properties(host_id);
+CREATE INDEX idx_properties_property_id ON Properties(property_id);
+CREATE INDEX idx_properties_location ON Properties(location);
+```
