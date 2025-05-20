@@ -1,3 +1,7 @@
+-- Query before indexing
+
+EXPLAIN SELECT * FROM Bookings WHERE user_id = 'some-user-id';
+
 -- Users table
 CREATE INDEX idx_users_email ON Users(email);
 CREATE INDEX idx_users_user_id ON Users(user_id);
@@ -11,3 +15,7 @@ CREATE INDEX idx_bookings_status ON Bookings(status);
 CREATE INDEX idx_properties_host_id ON Properties(host_id);
 CREATE INDEX idx_properties_property_id ON Properties(property_id);
 CREATE INDEX idx_properties_location ON Properties(location);
+
+-- After adding Indexes
+
+EXPLAIN SELECT * FROM Bookings WHERE user_id = 'some-user-id';
