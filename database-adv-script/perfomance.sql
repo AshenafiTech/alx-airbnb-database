@@ -6,25 +6,19 @@ SELECT
     Bookings.start_date,
     Bookings.end_date,
     Bookings.total_price,
-    Bookings.status AS booking_status,
-    Bookings.created_at AS booking_created_at,
-    Users.user_id,
     Users.first_name,
     Users.last_name,
-    Users.email,
-    Properties.property_id,
     Properties.name AS property_name,
-    Properties.location,
-    Properties.pricepernight,
-    Payments.payment_id,
     Payments.amount,
-    Payments.status AS payment_status,
     Payments.payment_date
 FROM
     Bookings
 INNER JOIN Users ON Bookings.user_id = Users.user_id
 INNER JOIN Properties ON Bookings.property_id = Properties.property_id
-LEFT JOIN Payments ON Bookings.booking_id = Payments.booking_id;
+LEFT JOIN Payments ON Bookings.booking_id = Payments.booking_id
+WHERE
+    Users.user_id = 'some-user-id'
+    AND Bookings.start_date >= '2024-01-01';
 
 -- Analyze the query’s performance using EXPLAIN and identify any inefficiencies.
 EXPLAIN
